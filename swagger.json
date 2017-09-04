@@ -22,6 +22,10 @@
     {
       "name": "account",
       "description": "Page365 user account detail"
+    },
+    {
+      "name": "conversation",
+      "description": "Conversation between page and user"
     }
   ],
   "schemes": [
@@ -197,6 +201,40 @@
           "200": {
             "schema": {
               "$ref": "#/definitions/Page_Full_Detail"
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{pageID}/conversations.json": {
+      "get": {
+        "tags": [
+          "conversation"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "cookie",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "pageID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of facebook page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Conversations_Response"
             },
             "description": "OK"
           }
@@ -838,6 +876,83 @@
           "items": {
             "type": "string"
           }
+        }
+      }
+    },
+    "Customer_Detail": {
+      "type": "object",
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tag"
+          }
+        },
+        "id": {
+          "type": "integer"
+        },
+        "fbid": {
+          "type": "string"
+        },
+        "lid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "last_order": {
+          "type": "object"
+        }
+      }
+    },
+    "Last_Message": {
+      "type": "object",
+      "properties": {
+        "own": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "auto": {
+          "type": "boolean"
+        },
+        "sent": {
+          "type": "object"
+        }
+      }
+    },
+    "Conversations_Response": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "type": "object",
+          "$ref": "#definitions/Customer_Detail"
+        },
+        "last_message": {
+          "type": "object",
+          "$ref": "#definitions/Last_Message"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "read": {
+          "type": "boolean"
+        },
+        "archived": {
+          "type": "boolean"
+        },
+        "unread_count": {
+          "type": "integer"
+        },
+        "last_active_at": {
+          "type": "string"
+        },
+        "can_reply": {
+          "type": "boolean"
         }
       }
     }
