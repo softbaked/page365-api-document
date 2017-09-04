@@ -162,7 +162,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Account_Detail"
+              "$ref": "#/definitions/Accounts_response"
             },
             "description": "OK"
           }
@@ -468,6 +468,39 @@
           }
         },
         "shipping_profile": {
+          "type": "string"
+        }
+      }
+    },
+    "Accounts_response": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "$ref": "#/definitions/User_Detail"
+        },
+        "all": {
+          "type": "array",
+          "items": {
+            "$ref": "#definitions/Page_Detail"
+          }
+        },
+        "origin": {
+          "type": "string"
+        },
+        "messages": {
+          "type": "object"
+        },
+        "max_activity": {
+          "type": "integer"
+        },
+        "loading": {
+          "type": "boolean"
+        },
+        "env": {
+          "type": "string"
+        },
+        "lang": {
           "type": "string"
         }
       }
