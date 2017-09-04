@@ -1,0 +1,456 @@
+swagger: '2.0'
+info:
+  description: List of page365 api for use in application both android and iOS.
+  version: 1.0.0
+  title: Page365
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: page365.net
+tags:
+  - name: signin
+    description: Everything about signin to use page365
+  - name: account
+    description: Page365 user account detail
+schemes:
+  - https
+paths:
+  /session/mobile/facebook_login_details:
+    get:
+      tags:
+        - signin
+      summary: Get facebook permission for login and start using page365 app
+      description: ''
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Facbook_permission'
+          description: OK
+  /session/mobile:
+    post:
+      tags:
+        - signin
+      summary: Start page365 app session
+      description: >-
+        Need to call this 2 time first you will get 'Waiting' now wait for 0.2
+        sec and then call again you will get 'Success' along with cookie. From
+        now on when you try to call another page 365 api add 'Cookie' key to
+        header with value '_page365_session + page365 session cookie'
+      parameters:
+        - in: query
+          name: user_fbid
+          require: true
+          shcema:
+            type: string
+          description: Facebook user id
+        - in: query
+          name: access_token
+          require: true
+          shcema:
+            type: string
+          description: Facebook access token
+        - in: query
+          name: name
+          require: true
+          shcema:
+            type: string
+          description: Facebook user full name
+        - in: query
+          name: email
+          require: true
+          schema:
+            type: string
+          description: Facebook user email
+        - in: query
+          name: device_type
+          require: true
+          schema:
+            type: string
+            enum:
+              - ios
+              - android
+          description: Type of device that call api
+        - in: query
+          name: device_token
+          require: true
+          schema:
+            type: string
+          description: Token that generate from device
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Page365_signin'
+          description: OK
+    delete:
+      tags:
+        - signin
+      summary: Delete page365 app session
+      parameters:
+        - in: header
+          name: cookie
+          schema:
+            type: string
+          required: true
+      description: ''
+      responses:
+        '200':
+          description: OK
+  /account.json:
+    get:
+      tags:
+        - account
+      parameters:
+        - in: header
+          name: cookie
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Account_detail'
+          description: OK
+securityDefinitions:
+  petstore_auth:
+    type: oauth2
+    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
+    flow: implicit
+    scopes:
+      'write:pets': modify pets in your account
+      'read:pets': read your pets
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  Facbook_permission:
+    type: object
+    properties:
+      read:
+        type: array
+        items:
+          type: string
+      publish:
+        type: array
+        items:
+          type: string
+      version:
+        type: string
+  Page365_signin:
+    type: object
+    properties:
+      status:
+        type: string
+  Page365_signout:
+    type: object
+    properties:
+      device_token:
+        type: string
+  Account_detail:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of account
+      enabled:
+        type: boolean
+      ready:
+        type: boolean
+      state:
+        type: integer
+      fbid:
+        type: string
+      username:
+        type: string
+      instagram_account:
+        type: string
+      address:
+        type: string
+      phone:
+        type: string
+      email:
+        type: string
+      lang:
+        type: string
+        enum:
+          - th
+          - en
+      unread_count:
+        type: integer
+      unread_orders_count:
+        type: integer
+      orders_count:
+        type: integer
+      created_on:
+        type: string
+      expires:
+        type: string
+      days_remaining:
+        type: integer
+      auto_renewal:
+        type: boolean
+      dedicated:
+        type: boolean
+      tour_state:
+        type: integer
+      order_expires_in:
+        type: integer
+      auth_path:
+        type: string
+      loading:
+        type: boolean
+      has_access_token:
+        type: integer
+      upgrade:
+        type: string
+      expired:
+        type: boolean
+      has_suggest_realm:
+        type: boolean
+      kronos_link:
+        type: string
+      qualified:
+        type: boolean
+      buy_keyword_enabled:
+        type: boolean
+      photo_sort:
+        type: string
+        enum:
+          - older
+          - latest
+      logo:
+        type: string
+      credit_card_pkey:
+        type: string
+      payment_pending:
+        type: boolean
+      custom_domain:
+        type: string
+      in_debt:
+        type: boolean
+      require_fb_permissions:
+        type: boolean
+      support_link:
+        type: string
+      throttled:
+        type: boolean
+      auto_deliver_invoice:
+        type: boolean
+      omise:
+        type: object
+        $ref: '#/definitions/Omise'
+      close_warning_new_package:
+        type: boolean
+      super_admin:
+        type: boolean
+      access_token:
+        type: string
+      suggest_realm_id:
+        type: integer
+      realm_id:
+        type: integer
+      all_realm:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+      last_active:
+        type: string
+      feature_recommed_banner:
+        type: object
+        properties:
+          credit_card:
+            type: boolean
+          lead_gen:
+            type: boolean
+      recommend_features:
+        type: array
+        items:
+          type: string
+      alerts:
+        type: array
+        items:
+          $ref: '#/definitions/Alert'
+      sms:
+        type: object
+        $ref: '#/definitions/Sms'
+      line_at:
+        type: string
+      instagram:
+        type: object
+        $ref: '#/definitions/Instagram'
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/Tag'
+      plan:
+        type: object
+        $ref: '#/definitions/User_plan_detail'
+      plans:
+        type: object
+        properties:
+          solo:
+            type: object
+            $ref: '#/definitions/Plan_detail'
+          pro:
+            type: object
+            $ref: '#/definitions/Plan_detail'
+          unlimited:
+            type: object
+            $ref: '#/definitions/Plan_detail'
+          credit:
+            type: integer
+      assets_host:
+        type: string
+      badges:
+        type: array
+        items:
+          $ref: '#/definitions/Badge'
+      bank_accounts:
+        type: array
+        items:
+          $ref: '#/definitions/Bank_Account_Detail'
+      shipping_profile:
+        type: string
+  Omise:
+    type: object
+    properties:
+      status_verified:
+        type: string
+      last_digits:
+        type: string
+      blocked:
+        type: string
+      payment_status:
+        type: string
+  Alert:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      message:
+        type: string
+      state:
+        type: string
+      url:
+        type: string
+      confirm:
+        type: string
+      type:
+        type: string
+  Sms:
+    type: object
+    properties:
+      credit:
+        type: integer
+      auto_refill_enabled:
+        type: boolean
+      auto_refill_amount:
+        type: integer
+  Instagram:
+    type: object
+    properties:
+      auth_link:
+        type: string
+  Tag:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      color:
+        type: string
+      border_color:
+        type: string
+  User_plan_detail:
+    type: object
+    properties:
+      name:
+        type: string
+      analytics_module:
+        type: boolean
+      questioner_mode:
+        type: boolean
+      line_module:
+        type: boolean
+      instagram_module:
+        type: boolean
+      export_report:
+        type: boolean
+      custom_domain:
+        type: boolean
+      max_reply_multiple:
+        type: integer
+      fb_app_id:
+        type: string
+      realm_id:
+        type: integer
+      can_upgrade_to:
+        type: object
+        properties:
+          solo:
+            type: boolean
+          pro:
+            type: boolean
+          unlimited:
+            type: boolean
+  Plan_detail:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: object
+        properties:
+          actual:
+            type: integer
+          yearly:
+            type: integer
+          monthly:
+            type: integer
+  Badge:
+    type: object
+    properties:
+      type:
+        type: string
+      value:
+        type: integer
+      max:
+        type: integer
+      process:
+        type: integer
+      level:
+        type: integer
+      award:
+        type: object
+        properties:
+          active:
+            type: boolean
+          received:
+            type: boolean
+  Bank_Account_Detail:
+    type: object
+    properties:
+      id:
+        type: integer
+      slug:
+        type: string
+      name:
+        type: string
+      account_name:
+        type: string
+      account_number:
+        type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
