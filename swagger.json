@@ -162,7 +162,41 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Accounts_response"
+              "$ref": "#/definitions/Accounts_Response"
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{pageID}.json": {
+      "get": {
+        "tags": [
+          "account"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "cookie",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "pageID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of facebook page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Page_Full_Detail"
             },
             "description": "OK"
           }
@@ -223,7 +257,7 @@
         }
       }
     },
-    "Account_Detail": {
+    "Page_Full_Detail": {
       "type": "object",
       "properties": {
         "name": {
@@ -430,7 +464,7 @@
         },
         "plan": {
           "type": "object",
-          "$ref": "#/definitions/User_plan_Detail"
+          "$ref": "#/definitions/User_Plan_Detail"
         },
         "plans": {
           "type": "object",
@@ -472,7 +506,7 @@
         }
       }
     },
-    "Accounts_response": {
+    "Accounts_Response": {
       "type": "object",
       "properties": {
         "user": {
