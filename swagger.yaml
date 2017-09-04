@@ -17,6 +17,8 @@ tags:
     description: Page365 user account detail
   - name: conversation
     description: Conversation between page and user
+  - name: customer
+    description: Customer api
 schemes:
   - https
 paths:
@@ -183,6 +185,52 @@ paths:
         '200':
           schema:
             $ref: '#/definitions/Customer_Conversations_Response'
+          description: OK
+  '/{pageID}/conversations/{conversationID}/read.json':
+    put:
+      tags:
+        - conversation
+      parameters:
+        - in: header
+          name: cookie
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: pageID
+          required: true
+          schema:
+            type: integer
+          description: ID of facebook page can get from accounts.json api
+        - in: path
+          name: conversationID
+          required: true
+          schema:
+            type: integer
+          description: ID of conversation can get from conversations.json api
+      responses:
+        '200':
+          description: OK
+  '/{pageID}/customer.json':
+    get:
+      tags:
+        - customer
+      parameters:
+        - in: header
+          name: cookie
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: pageID
+          required: true
+          schema:
+            type: integer
+          description: ID of facebook page
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Conversations_Response'
           description: OK
 securityDefinitions:
   petstore_auth:
@@ -793,6 +841,59 @@ definitions:
         type: array
         items:
           $ref: '#definitions/Message'
+  Customers_Response:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          view:
+            type: string
+          customers_count:
+            type: integer
+          tags:
+            type: array
+            items:
+              $ref: '#definitions/Tag'
+      customers:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            fbid:
+              type: string
+            name:
+              type: string
+            note:
+              type: string
+            first_seen_at:
+              type: string
+            last_seen_at:
+              type: string
+            conversations_count:
+              type: integer
+            order_count:
+              type: integer
+            tags:
+              type: array
+              items:
+                $ref: '#definitions/Tag'
+            profile_picture:
+              type: string
+            facebook:
+              type: boolean
+            line:
+              type: boolean
+            line_at:
+              type: boolean
+            kronos:
+              type: boolean
+            offline:
+              type: boolean
+            instagram:
+              type: boolean
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
