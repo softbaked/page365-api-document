@@ -240,6 +240,49 @@
           }
         }
       }
+    },
+    "/{pageID}/conversations/{conversationID}.json": {
+      "get": {
+        "tags": [
+          "conversation"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "cookie",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "pageID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of facebook page can get from accounts.json api"
+          },
+          {
+            "in": "path",
+            "name": "conversationID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of conversation can get from conversations.json api"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Customer_Conversations_Response"
+            },
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -953,6 +996,206 @@
         },
         "can_reply": {
           "type": "boolean"
+        }
+      }
+    },
+    "Customer_Detail_in_Conversation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "fbid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "last_order": {
+          "type": "string",
+          "enum": [
+            "expired",
+            "shipped",
+            "paid",
+            "created"
+          ]
+        },
+        "last_order_id": {
+          "type": "integer"
+        },
+        "profile_picture": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tag"
+          }
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "no": {
+                "type": "integer"
+              },
+              "stage": {
+                "type": "string",
+                "enum": [
+                  "expired",
+                  "shipped",
+                  "paid",
+                  "created"
+                ]
+              },
+              "total": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Order_Updates": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "order_no": {
+          "type": "integer"
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "expired",
+            "shipped",
+            "paid",
+            "created"
+          ]
+        },
+        "own": {
+          "type": "boolean"
+        },
+        "sms_sent_to": {
+          "type": "string"
+        },
+        "paid_amount": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string"
+        }
+      }
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "customer_fbid": {
+          "type": "string"
+        },
+        "customer_profile": {
+          "type": "string"
+        },
+        "customer_name": {
+          "type": "string"
+        },
+        "customer_id": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "own": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "auto": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "sent": {
+          "type": "boolean"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Customer_Conversations_Response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "read": {
+          "type": "boolean"
+        },
+        "archived": {
+          "type": "boolean"
+        },
+        "unread_count": {
+          "type": "integer"
+        },
+        "last_active_at": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        },
+        "can_reply": {
+          "type": "boolean"
+        },
+        "customer": {
+          "type": "object",
+          "$ref": "#/definitions/Customer_Detail_in_Conversation"
+        },
+        "order_updates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Order_Updates"
+          }
+        },
+        "last_message": {
+          "type": "object",
+          "$ref": "#/definitions/Last_Message"
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#definitions/Message"
+          }
         }
       }
     }
