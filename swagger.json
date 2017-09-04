@@ -38,7 +38,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Facbook_permission"
+              "$ref": "#/definitions/Facbook_Permission"
             },
             "description": "OK"
           }
@@ -115,7 +115,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Page365_signin"
+              "$ref": "#/definitions/Page365_Signin"
             },
             "description": "OK"
           }
@@ -144,7 +144,7 @@
         }
       }
     },
-    "/account.json": {
+    "/accounts.json": {
       "get": {
         "tags": [
           "account"
@@ -162,7 +162,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Account_detail"
+              "$ref": "#/definitions/Account_Detail"
             },
             "description": "OK"
           }
@@ -187,7 +187,7 @@
     }
   },
   "definitions": {
-    "Facbook_permission": {
+    "Facbook_Permission": {
       "type": "object",
       "properties": {
         "read": {
@@ -207,7 +207,7 @@
         }
       }
     },
-    "Page365_signin": {
+    "Page365_Signin": {
       "type": "object",
       "properties": {
         "status": {
@@ -215,7 +215,7 @@
         }
       }
     },
-    "Page365_signout": {
+    "Page365_Signout": {
       "type": "object",
       "properties": {
         "device_token": {
@@ -223,7 +223,7 @@
         }
       }
     },
-    "Account_detail": {
+    "Account_Detail": {
       "type": "object",
       "properties": {
         "name": {
@@ -430,22 +430,22 @@
         },
         "plan": {
           "type": "object",
-          "$ref": "#/definitions/User_plan_detail"
+          "$ref": "#/definitions/User_plan_Detail"
         },
         "plans": {
           "type": "object",
           "properties": {
             "solo": {
               "type": "object",
-              "$ref": "#/definitions/Plan_detail"
+              "$ref": "#/definitions/Plan_Detail"
             },
             "pro": {
               "type": "object",
-              "$ref": "#/definitions/Plan_detail"
+              "$ref": "#/definitions/Plan_Detail"
             },
             "unlimited": {
               "type": "object",
-              "$ref": "#/definitions/Plan_detail"
+              "$ref": "#/definitions/Plan_Detail"
             },
             "credit": {
               "type": "integer"
@@ -554,7 +554,7 @@
         }
       }
     },
-    "User_plan_detail": {
+    "User_Plan_Detail": {
       "type": "object",
       "properties": {
         "name": {
@@ -603,7 +603,7 @@
         }
       }
     },
-    "Plan_detail": {
+    "Plan_Detail": {
       "type": "object",
       "properties": {
         "id": {
@@ -676,6 +676,101 @@
         },
         "account_number": {
           "type": "string"
+        }
+      }
+    },
+    "User_Detail": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "fbid": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "trial_eligible": {
+          "type": "boolean"
+        },
+        "admin": {
+          "type": "boolean"
+        },
+        "lang": {
+          "type": "string",
+          "enum": [
+            "th",
+            "en"
+          ]
+        },
+        "permissions_error": {
+          "type": "integer"
+        },
+        "permissions_fresh": {
+          "type": "boolean"
+        },
+        "auth_page_path": {
+          "type": "string"
+        },
+        "support_link": {
+          "type": "string"
+        }
+      }
+    },
+    "Page_Detail": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "plan": {
+          "type": "string"
+        },
+        "unread_count": {
+          "type": "integer"
+        },
+        "can_access": {
+          "type": "boolean"
+        },
+        "admin_exceed": {
+          "type": "boolean"
+        },
+        "banned": {
+          "type": "boolean"
+        },
+        "admin_amount": {
+          "type": "integer"
+        },
+        "users": {
+          "type": "integer"
+        },
+        "active_admins": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "fbid": {
+          "type": "string"
+        },
+        "profile_logo": {
+          "type": "string"
+        },
+        "username_link": {
+          "type": "string"
+        },
+        "likes": {
+          "type": "integer"
+        },
+        "activities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     }
