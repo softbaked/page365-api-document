@@ -346,6 +346,42 @@
           }
         }
       }
+    },
+    "/{pageID}/customers/{customerID}/orders.json": {
+      "post": {
+        "tags": [
+          "order"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "cookie",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "pageID",
+            "type": "string",
+            "required": true,
+            "description": "ID of facebook page"
+          },
+          {
+            "in": "path",
+            "name": "customerID",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#definitions/Create_Order_Response"
+            },
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -1440,6 +1476,43 @@
                     "type": "string"
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Create_Order_Response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "updates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "order_no": {
+                "type": "integer"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "own": {
+                "type": "boolean"
+              },
+              "sms_sent_to": {
+                "type": "string"
+              },
+              "paid_amount": {
+                "type": "integer"
+              },
+              "created_at": {
+                "type": "string"
               }
             }
           }
