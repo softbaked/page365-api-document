@@ -340,7 +340,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Conversations_Response"
+              "$ref": "#definitions/Page_Orders_Response"
             },
             "description": "OK"
           }
@@ -1337,6 +1337,109 @@
               },
               "instagram": {
                 "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Page_Orders_Response": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "type": "object",
+          "properties": {
+            "expired_count": {
+              "type": "integer"
+            },
+            "paid_count:": {
+              "type": "integer"
+            },
+            "shipped_count": {
+              "type": "integer"
+            },
+            "transferred_count": {
+              "type": "integer"
+            },
+            "orders_count": {
+              "type": "integer"
+            },
+            "view": {
+              "type": "string"
+            },
+            "unread_orders_count": {
+              "type": "integer"
+            },
+            "kronos_orders_count": {
+              "type": "integer"
+            },
+            "tour_kronos": {
+              "type": "integer"
+            }
+          }
+        },
+        "express_type": {
+          "type": "string"
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "customer": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  }
+                }
+              },
+              "id": {
+                "type": "integer"
+              },
+              "no": {
+                "type": "integer"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "total": {
+                "type": "integer"
+              },
+              "tracking_code": {
+                "type": "string"
+              },
+              "read": {
+                "type": "boolean"
+              },
+              "credit_card": {
+                "type": "boolean"
+              },
+              "lead": {
+                "type": "boolean"
+              },
+              "express": {
+                "type": "boolean"
+              },
+              "printed": {
+                "type": "boolean"
+              },
+              "payment": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "time": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
