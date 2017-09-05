@@ -64,60 +64,43 @@
           {
             "in": "query",
             "name": "user_fbid",
-            "require": true,
-            "shcema": {
-              "type": "string"
-            },
-            "description": "Facebook user id"
+            "type": "string",
+            "required": true
           },
           {
             "in": "query",
             "name": "access_token",
-            "require": true,
-            "shcema": {
-              "type": "string"
-            },
-            "description": "Facebook access token"
+            "type": "string",
+            "required": true
           },
           {
             "in": "query",
             "name": "name",
-            "require": true,
-            "shcema": {
-              "type": "string"
-            },
+            "type": "string",
+            "required": true,
             "description": "Facebook user full name"
           },
           {
             "in": "query",
             "name": "email",
-            "require": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Facebook user email"
+            "type": "string",
+            "required": true
           },
           {
             "in": "query",
             "name": "device_type",
-            "require": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ios",
-                "android"
-              ]
-            },
-            "description": "Type of device that call api"
+            "type": "string",
+            "enum": [
+              "ios",
+              "android"
+            ],
+            "required": true
           },
           {
             "in": "query",
             "name": "device_token",
-            "require": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Token that generate from device"
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -138,13 +121,10 @@
           {
             "in": "header",
             "name": "cookie",
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "required": true
           }
         ],
-        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -161,9 +141,7 @@
           {
             "in": "header",
             "name": "cookie",
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "required": true
           }
         ],
@@ -177,27 +155,24 @@
         }
       }
     },
-    "/{pageID}.json": {
+    "/{pageID}": {
       "get": {
         "tags": [
           "account"
         ],
+        "summary": "Need '.json' at the end of api path",
         "parameters": [
           {
             "in": "header",
             "name": "cookie",
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "required": true
           },
           {
             "in": "path",
             "name": "pageID",
+            "type": "string",
             "required": true,
-            "schema": {
-              "type": "integer"
-            },
             "description": "ID of facebook page"
           }
         ],
@@ -216,23 +191,19 @@
         "tags": [
           "conversation"
         ],
+        "summary": "Need '.json' at the end of api path",
         "parameters": [
           {
             "in": "header",
             "name": "cookie",
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "required": true
           },
           {
             "in": "path",
             "name": "pageID",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            },
-            "description": "ID of facebook page"
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -245,7 +216,7 @@
         }
       }
     },
-    "/{pageID}/conversations/{conversationID}.json": {
+    "/{pageID}/conversations/{conversationID}": {
       "get": {
         "tags": [
           "conversation"
@@ -254,27 +225,21 @@
           {
             "in": "header",
             "name": "cookie",
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "required": true
           },
           {
             "in": "path",
             "name": "pageID",
+            "type": "string",
             "required": true,
-            "schema": {
-              "type": "integer"
-            },
             "description": "ID of facebook page can get from accounts.json api"
           },
           {
             "in": "path",
             "name": "conversationID",
+            "type": "string",
             "required": true,
-            "schema": {
-              "type": "integer"
-            },
             "description": "ID of conversation can get from conversations.json api"
           }
         ],
@@ -297,27 +262,21 @@
           {
             "in": "header",
             "name": "cookie",
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "required": true
           },
           {
             "in": "path",
             "name": "pageID",
+            "type": "string",
             "required": true,
-            "schema": {
-              "type": "integer"
-            },
             "description": "ID of facebook page can get from accounts.json api"
           },
           {
             "in": "path",
             "name": "conversationID",
+            "type": "string",
             "required": true,
-            "schema": {
-              "type": "integer"
-            },
             "description": "ID of conversation can get from conversations.json api"
           }
         ],
@@ -337,18 +296,44 @@
           {
             "in": "header",
             "name": "cookie",
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "required": true
           },
           {
             "in": "path",
             "name": "pageID",
+            "type": "string",
             "required": true,
+            "description": "ID of facebook page"
+          }
+        ],
+        "responses": {
+          "200": {
             "schema": {
-              "type": "integer"
+              "$ref": "#/definitions/Conversations_Response"
             },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{pageID}/orders.json": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "cookie",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "pageID",
+            "type": "string",
+            "required": true,
             "description": "ID of facebook page"
           }
         ],
