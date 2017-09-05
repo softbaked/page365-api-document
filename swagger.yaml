@@ -19,6 +19,8 @@ tags:
     description: Conversation between page and user
   - name: customer
     description: Customer api
+  - name: product
+    description: Page product api
 schemes:
   - https
 paths:
@@ -248,6 +250,32 @@ paths:
         '200':
           schema:
             $ref: '#definitions/Create_Order_Response'
+          description: OK
+  '/{pageID}/photos.json':
+    get:
+      tags:
+        - product
+      parameters:
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+        - in: query
+          name: hidden
+          type: boolean
+          required: false
+        - in: query
+          name: page
+          type: integer
+          required: false
+      responses:
+        '200':
+          schema:
+            $ref: '#definitions/Photos_Response'
           description: OK
 securityDefinitions:
   petstore_auth:
@@ -1002,6 +1030,62 @@ definitions:
               type: integer
             created_at:
               type: string
+  Photos_Response:
+    type: object
+    properties:
+      photos:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            url:
+              type: string
+            thumb_url:
+              type: string
+            product:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                price:
+                  type: integer
+                photo:
+                  type: string
+                photo_id:
+                  type: integer
+                enabled:
+                  type: boolean
+                detail:
+                  type: string
+                price_before_discount:
+                  type: integer
+                weight:
+                  type: integer
+                stockable:
+                  type: boolean
+                variants_existed:
+                  type: boolean
+                variant_id:
+                  type: integer
+                code:
+                  type: string
+                stock:
+                  type: object
+                  properties:
+                    actual:
+                      type: integer
+                    available:
+                      type: integer
+                    moves:
+                      type: array
+                      items:
+                        type: string
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
