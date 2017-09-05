@@ -340,6 +340,29 @@ paths:
           schema:
             $ref: '#definitions/Add_Item_To_Order_Response'
           description: OK
+  '{pageID}/orders/{orderID}':
+    get:
+      tags:
+        - order
+      summary: Need to add .json at the end of api path
+      parameters:
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: path
+          name: orderID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+      responses:
+        '200':
+          schema:
+            $ref: '#definitions/Albums_Response'
+          description: OK
 securityDefinitions:
   petstore_auth:
     type: oauth2
