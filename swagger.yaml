@@ -363,6 +363,84 @@ paths:
           schema:
             $ref: '#definitions/Albums_Response'
           description: OK
+    put:
+      tags:
+        - order
+      summary: Need to add .json at the end of api path
+      parameters:
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: path
+          name: orderID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+        - in: body
+          name: order
+          schema:
+            type: object
+            required:
+              - order
+              - order_items
+            properties:
+              order:
+                type: object
+                properties:
+                  bank_account_id:
+                    type: string
+                  customer_address:
+                    type: string
+                  customer_email:
+                    type: string
+                  customer_name:
+                    type: string
+                  customer_phone:
+                    type: string
+                  discount:
+                    type: number
+                  expires_on:
+                    type: string
+                  note:
+                    type: string
+                  paid_amount:
+                    type: number
+                  paid_date:
+                    type: string
+                  paid_time:
+                    type: string
+                  shipping_cost:
+                    type: number
+                  shipping_option:
+                    type: string
+                  stage:
+                    type: string
+                  tracking_code:
+                    type: string
+              order_items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    note:
+                      type: string
+                    price:
+                      type: number
+                    quantity:
+                      type: integer
+      responses:
+        '200':
+          schema:
+            $ref: '#definitions/Albums_Response'
+          description: OK
 securityDefinitions:
   petstore_auth:
     type: oauth2
