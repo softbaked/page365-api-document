@@ -34,6 +34,10 @@
     {
       "name": "product",
       "description": "Page product api"
+    },
+    {
+      "name": "order",
+      "description": "Ordering api"
     }
   ],
   "schemes": [
@@ -527,7 +531,7 @@
         }
       }
     },
-    "{pageID}/orders/{orderID}": {
+    "/{pageID}/orders/{orderID}": {
       "get": {
         "tags": [
           "order"
@@ -567,6 +571,9 @@
           "order"
         ],
         "summary": "Need to add .json at the end of api path",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -693,7 +700,7 @@
         }
       }
     },
-    "{pageID}/albums/add_to_order_album.json": {
+    "/{pageID}/albums/add_to_order_album.json": {
       "post": {
         "tags": [
           "product"
@@ -732,13 +739,12 @@
         ],
         "responses": {
           "200": {
-            "schema": null,
             "description": "OK"
           }
         }
       }
     },
-    "{pageID}/customers/{customerID}/add_product.json": {
+    "/{pageID}/customers/{customerID}/add_product.json": {
       "post": {
         "tags": [
           "order"
