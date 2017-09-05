@@ -307,6 +307,39 @@ paths:
           schema:
             $ref: '#definitions/Albums_Response'
           description: OK
+  '/{pageID}/order_items.json':
+    post:
+      tags:
+        - order
+      summary: Add item to order
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - order_id
+              - photo_id
+            properties:
+              order_id:
+                type: integer
+              photo_id:
+                type: integer
+      responses:
+        '200':
+          schema:
+            $ref: '#definitions/Add_Item_To_Order_Response'
+          description: OK
 securityDefinitions:
   petstore_auth:
     type: oauth2
@@ -1140,6 +1173,161 @@ definitions:
               type: string
             editable:
               type: boolean
+  Add_Item_To_Order_Response:
+    type: object
+    properties:
+      siblings:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            'no':
+              type: integer
+            stage:
+              type: string
+              enum:
+                - shipped
+                - paid
+                - expired
+                - transferred
+                - draft
+      shipping_options:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            account_id:
+              type: integer
+            name:
+              type: string
+            price:
+              type: integer
+            enabled:
+              type: boolean
+      id:
+        type: integer
+      'no':
+        type: integer
+      stage:
+        type: string
+        enum:
+          - shipped
+          - paid
+          - expired
+          - transferred
+          - draft
+      customer_name:
+        type: string
+      customer_address:
+        type: string
+      customer_email:
+        type: string
+      customer_phone:
+        type: string
+      note:
+        type: string
+      shipping_option:
+        type: string
+      shipping_cost:
+        type: integer
+      discount:
+        type: integer
+      subtotal:
+        type: integer
+      total:
+        type: integer
+      created_at:
+        type: string
+      expires_on:
+        type: string
+      invoice_link:
+        type: string
+      tracking_code:
+        type: string
+      bank_account_id:
+        type: string
+      paid_at:
+        type: string
+      paid_date:
+        type: string
+      paid_time:
+        type: string
+      paid_amount:
+        type: number
+      slip:
+        type: string
+      items_count:
+        type: integer
+      customer_origin:
+        type: string
+      customer_type:
+        type: string
+      lead:
+        type: boolean
+      conversation_id:
+        type: integer
+      printed:
+        type: boolean
+      shipment:
+        type: string
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            price:
+              type: number
+            quantity:
+              type: integer
+            note:
+              type: string
+            photo_url:
+              type: string
+            thumb_url:
+              type: string
+            variant:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                selected:
+                  type: boolean
+                choices:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    price:
+                      type: number
+            updates:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  order_no:
+                    type: integer
+                  stage:
+                    type: string
+                  own:
+                    type: boolean
+                  sms_sent_to:
+                    type: string
+                  paid_amount:
+                    type: number
+                  create_at:
+                    type: string
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
