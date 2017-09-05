@@ -195,7 +195,6 @@
         "tags": [
           "conversation"
         ],
-        "summary": "Need '.json' at the end of api path",
         "parameters": [
           {
             "in": "header",
@@ -225,6 +224,7 @@
         "tags": [
           "conversation"
         ],
+        "summary": "Need '.json' at the end of api path",
         "parameters": [
           {
             "in": "header",
@@ -416,12 +416,59 @@
             "name": "page",
             "type": "integer",
             "required": false
+          },
+          {
+            "in": "query",
+            "name": "album_id",
+            "type": "integer",
+            "required": false
           }
         ],
         "responses": {
           "200": {
             "schema": {
               "$ref": "#definitions/Photos_Response"
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{pageID}/albums.json": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pageID",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "cookie",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "hidden",
+            "type": "boolean",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#definitions/Albums_Response"
             },
             "description": "OK"
           }
@@ -1644,6 +1691,43 @@
                     }
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Albums_Response": {
+      "type": "object",
+      "properties": {
+        "albums": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "thumbnail": {
+                "type": "string"
+              },
+              "size": {
+                "type": "integer"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string"
+              },
+              "editable": {
+                "type": "boolean"
               }
             }
           }
