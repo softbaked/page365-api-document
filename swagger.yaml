@@ -361,7 +361,7 @@ paths:
       responses:
         '200':
           schema:
-            $ref: '#definitions/Albums_Response'
+            $ref: '#definitions/Add_Item_To_Order_Response'
           description: OK
     put:
       tags:
@@ -419,6 +419,15 @@ paths:
                     type: string
                   stage:
                     type: string
+                    enum:
+                      - draft
+                      - expired
+                      - transferred
+                      - paid
+                      - unpaid
+                      - shipped
+                      - voided
+                      - created
                   tracking_code:
                     type: string
               order_items:
@@ -439,7 +448,68 @@ paths:
       responses:
         '200':
           schema:
-            $ref: '#definitions/Albums_Response'
+            $ref: '#definitions/Add_Item_To_Order_Response'
+          description: OK
+  '{pageID}/albums/add_to_order_album.json':
+    post:
+      tags:
+        - product
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - photo_url
+            properties:
+              photo_url:
+                type: string
+      responses:
+        '200':
+          schema: null
+          description: OK
+  '{pageID}/customers/{customerID}/add_product.json':
+    post:
+      tags:
+        - order
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: path
+          name: customerID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - photo_url
+            properties:
+              photo_url:
+                type: string
+      responses:
+        '200':
+          schema:
+            $ref: '#definitions/Add_Item_To_Order_Response'
           description: OK
 securityDefinitions:
   petstore_auth:
