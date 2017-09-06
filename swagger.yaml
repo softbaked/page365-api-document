@@ -159,6 +159,23 @@ paths:
           name: pageID
           type: string
           required: true
+        - in: query
+          name: type
+          type: string
+          enum: [line, private, instagram, public]
+          required: false
+        - in: query
+          name: tag
+          type: integer
+          required: false
+        - in: query
+          name: search
+          type: string
+          required: false
+        - in: query
+          name: before
+          type: string
+          required: false
       responses:
         '200':
           schema:
@@ -189,6 +206,72 @@ paths:
           schema:
             $ref: '#/definitions/Customer_Conversations_Response'
           description: OK
+  '/{pageID}/conversations/{conversationID}/reply.json':
+    post:
+      tags: 
+        - conversation
+      summary: reply message back to customer
+      parameters: 
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: path
+          name: conversationID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+        - in: body
+          name: message
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              fileType:
+                type: string
+              upload:
+                type: string
+                format: binary
+      responses:
+        200:
+          description: OK
+  '/{pageID}/conversations/{conversationID}/reply_privately.json':
+    post:
+      tags: 
+        - conversation
+      summary: reply customer comment to privat message
+      parameters: 
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: path
+          name: conversationID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+        - in: body
+          name: message
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              fileType:
+                type: string
+              upload:
+                type: string
+                format: binary
+      responses:
+        200:
+          description: OK
   '/{pageID}/conversations/{conversationID}/read.json':
     put:
       tags:
@@ -211,6 +294,33 @@ paths:
       responses:
         '200':
           description: OK
+  '/{pageID}/conversations/{conversationID}/messages/{messageID}/retry.json':
+    put:
+      tags:
+        - conversation
+      parameters:
+        - in: header
+          name: cookie
+          type: string
+          required: true
+        - in: path
+          name: pageID
+          type: string
+          required: true
+          description: ID of facebook page can get from accounts.json api
+        - in: path
+          name: conversationID
+          type: string
+          required: true
+          description: ID of conversation can get from conversations.json api
+        - in: path
+          name: messageID
+          type: string
+          required: true
+          description: ID of message that fail to send
+      responses:
+        '200':
+          description: OK
   '/{pageID}/customer.json':
     get:
       tags:
@@ -230,6 +340,30 @@ paths:
           schema:
             $ref: '#/definitions/Conversations_Response'
           description: OK
+  '/{pageID}/customers/{customerID}':
+    get:
+      tags: 
+        - customer
+      summary: Need to add '.json' at the end of api path
+      description: Get customer detail
+      parameters: 
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: path
+          name: customerID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true          
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/Customer_Response'
+          description: OK
   '/{pageID}/orders.json':
     get:
       tags:
@@ -244,6 +378,14 @@ paths:
           type: string
           required: true
           description: ID of facebook page
+        - in: query
+          name: search
+          type: string
+          required: false
+        - in: query
+          name: scope
+          type: string
+          enum: [draft, expired, transferred, paid, unpaid, shipped, voide, created]
       responses:
         '200':
           schema:
@@ -472,6 +614,63 @@ paths:
         '200':
           schema:
             $ref: '#definitions/Add_Item_To_Order_Response'
+          description: OK
+    delete:
+      tags: 
+        - order
+      summary: Need to add .json at the end of api path
+      parameters:
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: path
+          name: orderID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+      responses:
+        200:
+          description: OK
+  '{pageID}/order_items/{itemID}':
+    delete:
+      summary: Need to add '.json' at the end of api path
+      parameters:
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: path
+          name: itemID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+      responses:
+        200:
+          description: OK
+  '/{pageID}/orders/{orderID}/deliver.json':
+    put:
+      parameters:
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: path
+          name: orderID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
+      responses:
+        200:
           description: OK
   '/{pageID}/albums/add_to_order_album.json':
     post:
@@ -1648,6 +1847,71 @@ definitions:
         type: boolean
       is_depen_creditcard:
         type: boolean
+  Customer_Response:
+    type: object
+    properties:
+      orders:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            no:
+              type: integer
+            stage:
+              type: string
+            customer_name:
+              type: string
+            customer_address:
+              type: string
+            customer_phone:
+              type: string
+            note:
+              type: string
+            expires_on:
+              type: string
+            total:
+              type: integer
+      customer:
+        type: object
+        properties:
+          account_id:
+            type: integer
+          id:
+            type: integer
+          name:
+            type: string
+          fbid:
+            type: string
+          lid:
+            type: string
+          type:
+            type: string
+          orders_count:
+            type: integer
+          conversations_count:
+            type: integer
+          first_seen_at:
+            type: string
+          last_seen_at:
+            type: string
+          phone:
+            type: string
+          email:
+            type: string
+          address:
+            type: string
+          note:
+            type: string
+          tags:
+            type: array
+            items:
+              $ref: '#/definitions/Tag'
+          profile_picture:
+            type: string
+          last_order_id:
+            type: integer
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
