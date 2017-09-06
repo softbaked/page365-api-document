@@ -439,6 +439,10 @@ paths:
           name: album_id
           type: integer
           required: false
+        - in: query
+          name: search
+          type: string
+          required: false
       responses:
         '200':
           schema:
@@ -635,8 +639,10 @@ paths:
       responses:
         200:
           description: OK
-  '{pageID}/order_items/{itemID}':
+  '/{pageID}/order_items/{itemID}':
     delete:
+      tags: 
+        - order
       summary: Need to add '.json' at the end of api path
       parameters:
         - in: path
@@ -656,6 +662,8 @@ paths:
           description: OK
   '/{pageID}/orders/{orderID}/deliver.json':
     put:
+      tags: 
+        - order
       parameters:
         - in: path
           name: pageID
@@ -678,6 +686,7 @@ paths:
         - product
       consumes:
         - application/json
+        - multipart/form-data
       parameters:
         - in: path
           name: pageID
@@ -687,15 +696,12 @@ paths:
           name: cookie
           type: string
           required: true
-        - in: body
-          name: body
-          schema:
-            type: object
-            required:
-              - photo_url
-            properties:
-              photo_url:
-                type: string
+        - in: formData
+          name: photo_file
+          type: file
+        - in: formData
+          name: photo_url
+          type: string
       responses:
         '200':
           description: OK
