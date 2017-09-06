@@ -38,6 +38,10 @@
     {
       "name": "order",
       "description": "Ordering api"
+    },
+    {
+      "name": "setting",
+      "description": "Every api about setting"
     }
   ],
   "schemes": [
@@ -791,6 +795,143 @@
           "200": {
             "schema": {
               "$ref": "#definitions/Add_Item_To_Order_Response"
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{pageID}/settings/bank_accounts/bank.json": {
+      "get": {
+        "tags": [
+          "setting"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pageID",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "cookie",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "lang": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{pageID}/settings/bank_accounts.json": {
+      "get": {
+        "tags": [
+          "setting"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pageID",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "cookie",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#definitions/Page_Bank_Account"
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "setting"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pageID",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "cookie",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "bank_accounts",
+            "description": "Data of bank account that this to be add or update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bank_accounts": {
+                  "type": "object",
+                  "properties": {
+                    "bank_slug": {
+                      "type": "string"
+                    },
+                    "no": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bankAccount": {
+                  "$ref": "#definitions/Page_Bank_Account"
+                }
+              }
             },
             "description": "OK"
           }
@@ -2285,6 +2426,29 @@
               }
             }
           }
+        }
+      }
+    },
+    "Page_Bank_Account": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "bank_slug": {
+          "type": "string"
+        },
+        "no": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "is_depen_creditcard": {
+          "type": "boolean"
         }
       }
     }
