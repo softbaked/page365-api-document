@@ -129,6 +129,23 @@ paths:
           schema:
             $ref: '#/definitions/Page_Full_Detail'
           description: OK
+    post:
+      tags:
+        - account
+      summary: Use only when want to use page as a new shop for first time
+      parameters:
+        - in: header
+          name: cookie
+          type: string
+          required: true
+        - in: path
+          name: pageID
+          type: string
+          required: true
+          description: ID of facebook page
+      responses:
+        '200':
+          description: OK
   '/{pageID}/conversations.json':
     get:
       tags:
@@ -594,6 +611,32 @@ paths:
                     type: boolean
                   id:
                     type: integer
+      responses:
+        '200':
+          schema:
+            type: object
+            properties:
+              bankAccount:
+                $ref: '#definitions/Page_Bank_Account'
+          description: OK
+  '/{pageID}/settings/bank_accounts/{accountID}':
+    delete:
+      tags:
+        - setting
+      summary: Need to add '.json' at the end of api path
+      parameters:
+        - in: path
+          name: pageID
+          type: string
+          required: true
+        - in: path
+          name: accountID
+          type: string
+          required: true
+        - in: header
+          name: cookie
+          type: string
+          required: true
       responses:
         '200':
           schema:
